@@ -1,0 +1,22 @@
+<IfModule mod_rewrite.c >
+    RewriteEngine on
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-s
+
+    RewriteRule ^lecturer-login lecturer-login/index.php
+    RewriteRule ^lecturer-registration lecturer-registration/index.php
+    RewriteRule ^key-generator key-generator/index.php
+
+    RewriteRule ^tests/([^\W]+)$ tests/index.php?key=$1
+    RewriteRule ^tests/([^/]+)/questions$ tests/questions/index.php?key=$1
+    RewriteRule ^tests/([^/]+)/timer$ tests/timer/index.php?key=$1
+    RewriteRule ^tests/([^/]+)/activities$ tests/activities/index.php?key=$1
+    RewriteRule ^tests/([^/]+)/export$ tests/export/index.php?key=$1
+
+    RewriteRule ^tests/([^/]+)/student-answers/$ tests/student-answers/index.php?key=$1
+    RewriteRule ^tests/([^/]+)/student-answers/([^/]+)$ tests/student-answers/index.php?key=$1&student_id=$2
+    RewriteRule ^tests/([^/]+)/student-answers/([^/]+)/export$ tests/student-answers/export/index.php?key=$1&student_id=$2
+</IfModule>
+
