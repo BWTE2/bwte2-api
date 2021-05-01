@@ -1,7 +1,8 @@
 # The best Webtech2 final exam api.
 HTTP Status Codes: [https://restfulapi.net/http-status-codes/](https://restfulapi.net/http-status-codes/)
 
-Priecinok bwte2-api treba mat na jednej urovni s bwte2-backend. Odporuca sa to zabalit este do jedneho priecinka kde budu len backend a api ale malo by to ist aj bez neho.
+Priecinok *bwte2-api* treba mat na jednej urovni s *bwte2-backend*.  
+Vytvorte si novy priecinok *bwte2* do ktoreho si date aj api aj backend.
 
 
 !!!!POZOR NA LOMITKA!!!!!!
