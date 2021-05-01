@@ -7,7 +7,8 @@ VSETKY CESTY:
 !!!!POZOR NA LOMITKA!!!!!!
 prilozeny obrazok nizsie vizualizuje strukturu a urovne
 
-REQUESTY:
+*REQUESTY:*
+
 1.
 /bwte2-api/key-generator
 GET - vrati generovany unikatny kluc noveho testu
@@ -56,7 +57,8 @@ POST - ucitel exportuje odpovede konkretneho studenta pri konkretnom teste do pd
 
 
 
-SSE:
+*SSE:*
+
 1.
 /bwte2-api/tests/{kluc testu}/timer
 -priebezne vracia ostavajuci cas konkretneho testu od jeho spustenia u studenta
