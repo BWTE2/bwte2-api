@@ -20,6 +20,8 @@ if($_SERVER["REQUEST_METHOD"] === 'OPTIONS'){
     die();
 }
 
+
+
 if(isLogged()) {
     handleAllRequests();
 }
