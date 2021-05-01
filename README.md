@@ -69,7 +69,8 @@ POST - ucitel exportuje vysledky konkretneho testu (vsetkych studentov) do csv
 `/bwte2-api/tests/{kluc testu}/studentsAnswers/`
 
 GET - ucitel ziska vypis vsetkych studentov ktori pisali test
-<br/>
+
+  <br/>
   
 
 9.
@@ -80,7 +81,8 @@ GET - ucitel ziska odpovede konkretneho studenta na konkretny test
 POST - student ukonci svoj test a odosle odpovede
 
 PUT - ucitel upravi bodove hodnotenie konkretneho studenta pri konkretnom teste
-<br/>
+  
+  <br/>
   
 
 10.
