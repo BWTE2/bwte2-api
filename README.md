@@ -10,7 +10,7 @@ prilozeny obrazok nizsie vizualizuje strukturu a urovne
 
 
 **REQUESTY:**
-  <br/>
+
 1.
 `/bwte2-api/key-generator`
 
@@ -92,7 +92,7 @@ POST - ucitel exportuje odpovede konkretneho studenta pri konkretnom teste do pd
 
 
 **SSE:**
-  <br/>
+
 1.
 `/bwte2-api/tests/{kluc testu}/timer`
 
