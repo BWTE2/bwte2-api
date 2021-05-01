@@ -11,10 +11,13 @@ prilozeny obrazok nizsie vizualizuje strukturu a urovne
 
 1.
 /bwte2-api/key-generator
+
 GET - vrati generovany unikatny kluc noveho testu
+
 
 2.
 /bwte2-api/lecturer-login
+
 POST - prihlasi ucitela
 
 3.
