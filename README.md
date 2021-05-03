@@ -3,7 +3,9 @@ HTTP Status Codes: [https://restfulapi.net/http-status-codes/](https://restfulap
 
 Priecinok *bwte2-api* treba mat na jednej urovni s *bwte2-backend*.  
 Vytvorte si novy priecinok *bwte2* do ktoreho si date aj api aj backend.
-
+ <br/><br/>/bwte2 <br/>
+|-- bwte2-api <br/>
+|-- bwte2-backend <br/><br/>
 
 !!!!POZOR NA LOMITKA!!!!!!
 
