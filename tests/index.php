@@ -118,21 +118,11 @@ function handlePostRequest(){
         return;
     }
     $data = getInputJsonData();
-
-    if(arePostDataCorrect($data)){
-        $json = sendPostData($data);
-        echo json_encode($json, FLAGS);
-    }
-    else{
-        http_response_code(412);
-    }
+    $json = sendPostData($data);
+    echo json_encode($json, FLAGS);
 }
 
 
-function arePostDataCorrect($data){
-    //TODO
-    return true;
-}
 
 function sendPostData($data){
     $key = $_GET["key"];
