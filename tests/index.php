@@ -13,6 +13,9 @@ const FLAGS = JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHE
  * SCRIPT
 */////////////////////////////////////////////////////////////////
 
+$_SESSION["lecturerId"] = 1; //toto tu je docasne kym nie je dokoncene prihlasovanie ucitela
+
+
 if($_SERVER["REQUEST_METHOD"] === 'OPTIONS'){
     header('Access-Control-Allow-Origin: *');
     header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method,Access-Control-Request-Headers, Authorization");
