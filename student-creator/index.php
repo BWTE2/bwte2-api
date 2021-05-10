@@ -61,7 +61,7 @@ function getInputJsonData(){
 
 function sendPostData($data){
     $studentCreator = new StudentCreator();
-    $response = $studentCreator->addStudent($data);
+    $response = $studentCreator->createStudent($data);
 
     http_response_code(201);
     return ["response" => $response];
