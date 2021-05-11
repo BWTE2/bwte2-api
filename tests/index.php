@@ -151,15 +151,11 @@ function handlePutRequest(){
 
     if($data->wantActivate){
         $json = activateTest();
-        echo json_encode($json, FLAGS);
-    }
-    else if (wantDeActivateTest($data)){
-        $json = deactivateTest();
-        echo json_encode($json, FLAGS);
     }
     else{
-        http_response_code(412);
+        $json = deactivateTest();
     }
+    echo json_encode($json, FLAGS);
 }
 
 
