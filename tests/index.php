@@ -149,7 +149,7 @@ function handlePutRequest(){
     }
     $data = getInputJsonData();
 
-    if(wantActivateTest($data)){
+    if($data->wantActivate){
         $json = activateTest();
         echo json_encode($json, FLAGS);
     }
@@ -160,17 +160,6 @@ function handlePutRequest(){
     else{
         http_response_code(412);
     }
-}
-
-
-function wantActivateTest($data){
-    //TODO
-    return true;
-}
-
-function wantDeActivateTest($data){
-    //TODO
-    return true;
 }
 
 
