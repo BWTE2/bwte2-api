@@ -6,6 +6,7 @@
     RewriteCond %{REQUEST_FILENAME} !-s
 
     RewriteRule ^student-creator student-creator/index.php
+    RewriteRule ^lecturer-logout lecturer-logout/index.php
     RewriteRule ^lecturer-login lecturer-login/index.php
     RewriteRule ^lecturer-registration lecturer-registration/index.php
     RewriteRule ^key-generator key-generator/index.php
