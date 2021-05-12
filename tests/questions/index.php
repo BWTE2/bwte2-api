@@ -4,7 +4,7 @@ header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 header("Access-Control-Allow-Credentials: true");
 header('Content-type: application/json');
 header('Access-Control-Allow-Methods: GET, OPTIONS');
-
+session_start();
 require_once("../../../bwte2-backend/controllers/help_controllers/LecturerAccessor.php");
 require_once("../../../bwte2-backend/controllers/MainTestController.php");
 const FLAGS = JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
@@ -20,12 +20,31 @@ if($_SERVER["REQUEST_METHOD"] === 'OPTIONS'){
     die();
 }
 
-handleAllRequests();
 
+
+
+if(isLogged()) {
+    handleAllRequests();
+}
+else{
+//    http_response_code(401);
+    $responseMessage = ["responseCode" => 401, "responseMessaage" => "Neautorizovany prístup"];
+
+    echo json_encode(["responseErrorMessage" => $responseMessage]);
+
+}
 
 /* ////////////////////////////////////////////////////////////////
  * FUNCTIONS
 */////////////////////////////////////////////////////////////////
+function isLogged(){
+    if(isset($_SESSION["studentId"])) {
+        return true;
+    }
+    return false;
+}
+
+
 
 function handleAllRequests(){
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
