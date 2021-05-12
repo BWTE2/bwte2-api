@@ -29,27 +29,34 @@ POST - prida studenta do databazy ak neexistuje
 <br/>
 
 3.
+`/bwte2-api/lecturer-logout`
+
+POST - odhlasi ucitela
+  
+<br/>
+
+4.
 `/bwte2-api/lecturer-login`
 
 POST - prihlasi ucitela
   
 <br/>
 
-4.
+5.
 `/bwte2-api/lecturer-registration`
 
 POST - registruje ucitela
 
   <br/>
 
-5.
+6.
 `/bwte2-api/tests/`
 
 GET - ucitel ziska vypis testov prihlaseneho ucitela
   
 <br/>
 
-6.
+7.
 `/bwte2-api/tests/{kluc testu}`
 
 GET - ucitel ziska informacie o konkretnom teste
@@ -60,7 +67,7 @@ PUT - ucitel aktivuje/deaktivuje test
   <br/>
 
 
-7.
+8.
 `/bwte2-api/tests/{kluc testu}/questions`
 
 GET - (student) ziska  otazky bez odpovedi konkretneho testu
@@ -68,14 +75,14 @@ GET - (student) ziska  otazky bez odpovedi konkretneho testu
 
   <br/>
 
-8.
+9.
 `/bwte2-api/tests/{kluc testu}/export`
 
 POST - ucitel exportuje vysledky konkretneho testu (vsetkych studentov) do csv
 
   <br/>
 
-9.
+10.
 `/bwte2-api/tests/{kluc testu}/students/`
 
 GET - ucitel ziska vypis vsetkych studentov ktori pisali test
@@ -83,7 +90,7 @@ GET - ucitel ziska vypis vsetkych studentov ktori pisali test
   <br/>
   
 
-10.
+11.
 `/bwte2-api/tests/{kluc testu}/students/{id studenta}`
 
 GET - ucitel ziska odpovede konkretneho studenta na konkretny test
@@ -95,7 +102,7 @@ PUT - ucitel upravi bodove hodnotenie konkretneho studenta pri konkretnom teste
   <br/>
   
 
-11.
+12.
 `/bwte2-api/tests/{kluc testu}/students/{id studenta}/export`
 
 POST - ucitel exportuje odpovede konkretneho studenta pri konkretnom teste do pdf
