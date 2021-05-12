@@ -30,6 +30,9 @@ function handleSending(){
     if(isValidKey($key)){
         runSending($key);
     }
+    else{
+        echo "data: invalid-key";
+    }
 }
 
 function isValidKey($key){
@@ -52,6 +55,10 @@ function runSending($key)
         ob_flush();
         flush();
         sleep(1);
+    }
+
+    if(!$isTestRunning){
+        echo "data: inactive-test";
     }
 }
 
