@@ -4,7 +4,7 @@ header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 header("Access-Control-Allow-Credentials: true");
 header('Content-type: application/json');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
-
+session_start();
 require_once("../../bwte2-backend/controllers/help_controllers/LecturerAccessor.php");
 require_once("../../bwte2-backend/controllers/help_controllers/StudentCreator.php");
 const FLAGS = JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
@@ -62,6 +62,11 @@ function getInputJsonData(){
 function sendPostData($data){
     $studentCreator = new StudentCreator();
     $response = $studentCreator->createStudent($data);
+
+    if($response["student"] !== null)
+    {
+        $_SESSION["studentId"] = $response["student"]["studentId"];
+    }
 
     http_response_code(201);
     return ["response" => $response];
