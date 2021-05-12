@@ -31,6 +31,7 @@ function handleSending(){
         runSending($key);
     }
     else{
+        echo "event: timer\n";
         echo "data: invalid-key";
     }
 }
@@ -47,7 +48,8 @@ function runSending($key)
     $isTestRunning = $testService->isTestRunning($key);
 
     while ($time >= 0 && $isTestRunning) {
-        echo "data: " . json_encode(["response" => ["time" => $time]], FLAGS) . PHP_EOL . PHP_EOL;
+        echo "event: timer\n";
+        echo "data: " .  $time . PHP_EOL . PHP_EOL;
 
         $time--;
         $isTestRunning = $testService->isTestRunning($key);
@@ -58,6 +60,7 @@ function runSending($key)
     }
 
     if(!$isTestRunning){
+        echo "event: timer\n";
         echo "data: inactive-test";
     }
 }
