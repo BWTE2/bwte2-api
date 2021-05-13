@@ -31,6 +31,10 @@ function handleSending(){
     if(isValidKey($key)){
         runSending();
     }
+    else{
+        echo "event: activities\n";
+        echo "data: " . json_encode(["response" => []]) . PHP_EOL . PHP_EOL;
+    }
 }
 
 function isValidKey($key){
@@ -46,8 +50,10 @@ function runSending()
     $isTestRunning = $testService->isTestRunning($key);
 
     while ($isTestRunning) {
-        echo json_encode(["response" => ["states" => $studentsStates]], FLAGS);
+        echo "event: activities\n";
+        echo "data: " . json_encode(["response" =>  $studentsStates]) . PHP_EOL . PHP_EOL;
 
+        $studentsStates = getStudentsStates($key);
         $isTestRunning = $testService->isTestRunning($key);
 
         ob_flush();
