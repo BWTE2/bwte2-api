@@ -38,6 +38,7 @@ POST - odhlasi ucitela
 4.
 `/bwte2-api/lecturer-login`
 
+GET - informacie o tom ci je ucitel prihlaseny a informacie onom
 POST - prihlasi ucitela
   
 <br/>
