@@ -46,7 +46,8 @@ function runSending()
     $isTestRunning = $testService->isTestRunning($key);
 
     while ($isTestRunning) {
-        echo json_encode(["response" => ["states" => $studentsStates]], FLAGS);
+        echo "event: activities\n";
+        echo "data: " . json_encode(["response" => ["states" => $studentsStates]], FLAGS) . PHP_EOL . PHP_EOL;
 
         $isTestRunning = $testService->isTestRunning($key);
 
