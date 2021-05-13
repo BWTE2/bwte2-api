@@ -33,7 +33,7 @@ function handleSending(){
     }
     else{
         echo "event: activities\n";
-        echo "data: " . json_encode(["response" => []], FLAGS) . PHP_EOL . PHP_EOL;
+        echo "data: " . json_encode(["response" => []]) . PHP_EOL . PHP_EOL;
     }
 }
 
@@ -51,7 +51,7 @@ function runSending()
 
     while ($isTestRunning) {
         echo "event: activities\n";
-        echo "data: " . json_encode(["response" =>  $studentsStates], FLAGS) . PHP_EOL . PHP_EOL;
+        echo "data: " . json_encode(["response" =>  $studentsStates]) . PHP_EOL . PHP_EOL;
 
         $studentsStates = getStudentsStates($key);
         $isTestRunning = $testService->isTestRunning($key);
