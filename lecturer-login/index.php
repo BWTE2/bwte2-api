@@ -47,14 +47,23 @@ function handleAllRequests()
  */
 
 function handleGetRequest(){
+
     session_start();
     $isLogged = isLogged();
+
+    if(!$isLogged)
+    {
+        echo json_encode(["response" => ["isLogged" => $isLogged, "info" => null]], FLAGS);
+        return;
+    }
     $lecturerId = $_SESSION['lecturerId'];
     $lecturerAccessor = new LecturerAccessor();
     $info = $lecturerAccessor->getLecturerInfo($lecturerId);
 
     http_response_code(200);
     echo json_encode(["response" => ["isLogged" => $isLogged, "info" => $info]], FLAGS);
+
+
 }
 
 function isLogged(){
