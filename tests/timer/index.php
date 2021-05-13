@@ -32,7 +32,7 @@ function handleSending(){
     }
     else{
         echo "event: timer\n";
-        echo "data: invalid-key";
+        echo "data: 0";
     }
 }
 
@@ -53,6 +53,9 @@ function runSending($key)
 
         $time--;
         $isTestRunning = $testService->isTestRunning($key);
+        if(!$isTestRunning){
+            $time = 0;
+        }
 
         ob_flush();
         flush();
@@ -60,8 +63,13 @@ function runSending($key)
     }
 
     if(!$isTestRunning){
+        $time = 0;
         echo "event: timer\n";
-        echo "data: inactive-test";
+        echo "data: " .  $time . PHP_EOL . PHP_EOL;
+
+        ob_flush();
+        flush();
+        sleep(1);
     }
 }
 
