@@ -8,12 +8,12 @@ header('Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS');
 require_once("../../bwte2-backend/controllers/help_controllers/LecturerAccessor.php");
 require_once("../../bwte2-backend/controllers/MainTestController.php");
 const FLAGS = JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
-
+session_start();
 /* ////////////////////////////////////////////////////////////////
  * SCRIPT
 */////////////////////////////////////////////////////////////////
 
-$_SESSION["lecturerId"] = 1; //toto tu je docasne kym nie je dokoncene prihlasovanie ucitela
+
 
 
 if($_SERVER["REQUEST_METHOD"] === 'OPTIONS'){
@@ -29,7 +29,9 @@ if(isLogged()) {
     handleAllRequests();
 }
 else{
-    http_response_code(401);
+    $responseMessage = ["responseCode" => 401, "responseMessaage" => "Neautorizovany prístup"];
+
+    echo json_encode(["responseErrorMessage" => $responseMessage]);
 }
 
 
@@ -44,10 +46,7 @@ function isLogged(){
     if(isset($_SESSION["lecturerId"])) {
         return true;
     }
-
-    //TODO: v priapde potreby skontkretizovat
-
-    return true;
+    return false;
 }
 
 

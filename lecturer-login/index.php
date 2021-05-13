@@ -5,6 +5,7 @@ header("Access-Control-Allow-Credentials: true");
 header('Content-type: application/json');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 
+session_start();
 require_once("../../bwte2-backend/controllers/help_controllers/LecturerAccessor.php");
 const FLAGS = JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
 
@@ -46,14 +47,23 @@ function handleAllRequests()
  */
 
 function handleGetRequest(){
+
     session_start();
     $isLogged = isLogged();
+
+    if(!$isLogged)
+    {
+        echo json_encode(["response" => ["isLogged" => $isLogged, "info" => null]], FLAGS);
+        return;
+    }
     $lecturerId = $_SESSION['lecturerId'];
     $lecturerAccessor = new LecturerAccessor();
     $info = $lecturerAccessor->getLecturerInfo($lecturerId);
 
     http_response_code(200);
     echo json_encode(["response" => ["isLogged" => $isLogged, "info" => $info]], FLAGS);
+
+
 }
 
 function isLogged(){
@@ -93,6 +103,11 @@ function areDataCorrect($data){
 function sendPostData($data){
     $lecturerAccessor = new LecturerAccessor();
     $response = $lecturerAccessor->handleLoginEvent($data);
+
+    if($response["accountExists"] && $response["correctPassword"])
+    {
+        $_SESSION["lecturerId"] = $response["lecturer"]["lecturerId"];
+    }
 
     http_response_code(201);
     return ["response" => $response];
