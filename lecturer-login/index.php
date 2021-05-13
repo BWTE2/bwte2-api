@@ -3,7 +3,7 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization');
 header("Access-Control-Allow-Credentials: true");
 header('Content-type: application/json');
-header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 
 require_once("../../bwte2-backend/controllers/help_controllers/LecturerAccessor.php");
 const FLAGS = JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
@@ -30,8 +30,10 @@ handleAllRequests();
 
 function handleAllRequests()
 {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        //prihlasenie ucitela
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        handleGetRequest();
+    }
+    else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         handlePostRequest();
     }
     else {
@@ -39,6 +41,28 @@ function handleAllRequests()
     }
 }
 
+/*
+ * GET
+ */
+
+function handleGetRequest(){
+    session_start();
+    $isLogged = isLogged();
+    $lecturerId = $_SESSION['lecturerId'];
+    $lecturerAccessor = new LecturerAccessor();
+    $info = $lecturerAccessor->getLecturerInfo($lecturerId);
+
+    http_response_code(200);
+    echo json_encode(["response" => ["isLogged" => $isLogged, "info" => $info]], FLAGS);
+}
+
+function isLogged(){
+    if(isset($_SESSION['lecturerId'])){
+        return true;
+    }
+
+    return false;
+}
 
 /*
  * POST
