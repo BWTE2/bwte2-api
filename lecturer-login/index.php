@@ -48,7 +48,6 @@ function handleAllRequests()
 
 function handleGetRequest(){
 
-    session_start();
     $isLogged = isLogged();
 
     if(!$isLogged)
