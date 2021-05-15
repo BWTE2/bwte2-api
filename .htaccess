@@ -20,6 +20,6 @@
 
     RewriteRule ^tests/([^/]+)/students/$ tests/students/index.php?key=$1
     RewriteRule ^tests/([^/]+)/students/([^/]+)$ tests/students/index.php?key=$1&student_id=$2
-    RewriteRule ^tests/([^/]+)/students/([^/]+)/export$ tests/students/export/index.php?key=$1&student_id=$2
+    RewriteRule ^tests/([^/]+)/students/([^/]+)/export$ tests/students/export/index.php?key=$1
 </IfModule>
 
