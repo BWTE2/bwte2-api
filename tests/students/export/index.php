@@ -65,16 +65,14 @@ function handlePostRequest()
         return;
     }
 
-    $json = sendExport();
-    echo json_encode($json, FLAGS);
+    crateExport();
 }
 
-function sendExport()
+function crateExport()
 {
     $key = $_GET["key"];
     $testService = new FileExporter();
-    $response = $testService->createStudentPdf($key);
+     $testService->createStudentPdf($key);
     http_response_code(201);
-    return ["response" => $response];
 }
 
