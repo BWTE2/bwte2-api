@@ -3,7 +3,7 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization');
 header("Access-Control-Allow-Credentials: true");
 header('Content-type: application/json');
-header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Methods: POST, OPTIONS,GET');
 
 require_once("../../../../bwte2-backend/controllers/help_controllers/FileExporter.php");
 
@@ -13,7 +13,7 @@ const FLAGS = JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHE
  * SCRIPT
 */////////////////////////////////////////////////////////////////
 
-if($_SERVER["REQUEST_METHOD"] === 'OPTIONS'){
+if ($_SERVER["REQUEST_METHOD"] === 'OPTIONS') {
     header('Access-Control-Allow-Origin: *');
     header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method,Access-Control-Request-Headers, Authorization");
     header("HTTP/1.1 200 OK");
@@ -21,10 +21,9 @@ if($_SERVER["REQUEST_METHOD"] === 'OPTIONS'){
 }
 
 
-if(isLogged()) {
+if (isLogged()) {
     handleAllRequests();
-}
-else{
+} else {
     http_response_code(401);
 }
 
@@ -33,8 +32,9 @@ else{
  * FUNCTIONS
 */////////////////////////////////////////////////////////////////
 
-function isLogged(){
-    if(isset($_SESSION["lecturerId"])) {
+function isLogged()
+{
+    if (isset($_SESSION["lecturerId"])) {
         return true;
     }
 
@@ -44,11 +44,11 @@ function isLogged(){
 }
 
 
-function handleAllRequests() {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+function handleAllRequests()
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         handlePostRequest();
-    }
-    else {
+    } else {
         http_response_code(405);
     }
 }
@@ -58,39 +58,22 @@ function handleAllRequests() {
  * POST
  */
 
-function handlePostRequest(){
-    if(!isset($_GET["key"], $_GET["student_id"])){
+function handlePostRequest()
+{
+    if (!isset($_GET["key"])) {
         http_response_code(412);
         return;
     }
-    $data = getInputJsonData();
 
-    if(arePostDataCorrect($data)){
-        $json = sendPostData($data);
-        echo json_encode($json, FLAGS);
-    }
-    else{
-        http_response_code(412);
-    }
+    $json = sendExport();
+    echo json_encode($json, FLAGS);
 }
 
-function getInputJsonData(){
-    $json = file_get_contents('php://input');
-    return json_decode($json, false);
-}
-
-function arePostDataCorrect($data){
-    //TODO
-    return true;
-}
-
-function sendPostData($data){
+function sendExport()
+{
     $key = $_GET["key"];
-    $student_id = $_GET["student_id"];
-
     $testService = new FileExporter();
-    $response = $testService->createStudentPdf($data, $key, $student_id);
-
+    $response = $testService->createStudentPdf($key);
     http_response_code(201);
     return ["response" => $response];
 }
