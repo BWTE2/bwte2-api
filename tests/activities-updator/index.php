@@ -62,6 +62,13 @@ function handlePutStateRequest(){
 
 function getJson($key, $studentId){
     $studentCreator = new StudentCreator();
+    $actualStatus = $studentCreator->getActualStatus($key, $studentId);
+
+    if($actualStatus === "FINISHED"){
+        http_response_code(200);
+        return ["updated" => "not", "key" => $key, "studentId" => $studentId];
+    }
+
     $inputJson = getInputJsonData();
     $wasIn = $inputJson->wasIn;
 

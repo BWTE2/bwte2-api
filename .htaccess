@@ -13,7 +13,7 @@
 
     RewriteRule ^tests/([^\W]+)$ tests/index.php?key=$1
     RewriteRule ^tests/([^/]+)/questions$ tests/questions/index.php?key=$1
-    RewriteRule ^tests/([^/]+)/timer$ tests/timer/index.php?key=$1
+    RewriteRule ^tests/([^/]+)/timer/([^/]+)$ tests/timer/index.php?key=$1&studentId=$2
     RewriteRule ^tests/([^/]+)/activities$ tests/activities/index.php?key=$1
     RewriteRule ^tests/([^/]+)/activities-updator/([^/]+)$ tests/activities-updator/index.php?key=$1&studentId=$2
     RewriteRule ^tests/([^/]+)/export$ tests/export/index.php?key=$1

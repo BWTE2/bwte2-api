@@ -3,6 +3,7 @@ header('Content-Type: text/event-stream');
 header('Cache-Control: no-cache');
 header("Connection: keep-alive");
 
+require_once("../../../bwte2-backend/controllers/help_controllers/StudentCreator.php");
 require_once("../../../bwte2-backend/controllers/MainTestController.php");
 
 const FLAGS = JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
@@ -12,7 +13,7 @@ const FLAGS = JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHE
 */////////////////////////////////////////////////////////////////
 
 
-if(isset($_GET["key"])){
+if(isset($_GET["key"]) && isset($_GET["studentId"])){
     handleSending();
 }
 else{
@@ -43,17 +44,22 @@ function isValidKey($key){
 
 function runSending($key)
 {
+    $studentId = $_GET["studentId"];
+    $studentCreator = new StudentCreator();
+    $studentStatus = $studentCreator->getActualStatus($key, $studentId);
+
     $time = getMaxTime($key);
     $testService = new MainTestController();
     $isTestRunning = $testService->isTestRunning($key);
 
-    while ($time >= 0 && $isTestRunning) {
+    while ($time >= 0 && $isTestRunning && $studentStatus !== "FINISHED") {
         echo "event: timer\n";
         echo "data: " .  $time . PHP_EOL . PHP_EOL;
 
         $time--;
         $isTestRunning = $testService->isTestRunning($key);
-        if(!$isTestRunning){
+        $studentStatus = $studentCreator->getActualStatus($key, $studentId);
+        if(!$isTestRunning || $studentStatus === "FINISHED"){
             $time = 0;
         }
 
@@ -62,7 +68,7 @@ function runSending($key)
         sleep(1);
     }
 
-    if(!$isTestRunning){
+    if(!$isTestRunning || $studentStatus === "FINISHED"){
         $time = 0;
         echo "event: timer\n";
         echo "data: " .  $time . PHP_EOL . PHP_EOL;
