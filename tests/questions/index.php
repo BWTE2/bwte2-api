@@ -6,6 +6,7 @@ header('Content-type: application/json');
 header('Access-Control-Allow-Methods: GET, OPTIONS');
 session_start();
 require_once("../../../bwte2-backend/controllers/help_controllers/LecturerAccessor.php");
+require_once("../../../bwte2-backend/controllers/test_controllers/StudentGetter.php");
 require_once("../../../bwte2-backend/controllers/MainTestController.php");
 const FLAGS = JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
 
@@ -78,8 +79,13 @@ function handleGetQuestionsRequest(){
 
 function getQuestionsJson($key){
     $testController = new MainTestController();
-    $response = $testController->getQuestions($key);
+    $test = $testController->getQuestions($key);
+
+    $studentGetter = new StudentGetter();
+    $studentId = $_SESSION["studentId"];
+    $studentName = $studentGetter->getName($studentId);
+   // $studentFullName = $studentName['name'] + $studentName['surname'];
 
     http_response_code(200);
-    return ["response" => $response];
+    return ["response" => [ "test" => $test, "studentId" => $studentId, "studentName" => $studentName]];
 }
