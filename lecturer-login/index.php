@@ -52,7 +52,7 @@ function handleGetRequest(){
 
     if(!$isLogged)
     {
-        echo json_encode(["response" => ["isLogged" => $isLogged, "info" => null]], FLAGS);
+        echo json_encode(["response" => ["isLogged" => false, "info" => null]], FLAGS);
         return;
     }
     $lecturerId = $_SESSION['lecturerId'];
@@ -60,7 +60,7 @@ function handleGetRequest(){
     $info = $lecturerAccessor->getLecturerInfo($lecturerId);
 
     http_response_code(200);
-    echo json_encode(["response" => ["isLogged" => $isLogged, "info" => $info]], FLAGS);
+    echo json_encode(["response" => ["isLogged" => true, "info" => $info]], FLAGS);
 
 
 }
