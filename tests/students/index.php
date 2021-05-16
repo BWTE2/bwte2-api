@@ -102,10 +102,10 @@ function handleGetAllStudentsRequest(){
 function getAllStudentsJson($key){
     $testService = new MainTestController();
 
-    //$response = $testService->getAllStudents($key);
+    $response = $testService->getAllStudents($key);
 
     http_response_code(200);
-    return ["response" => []];
+    return ["response" => $response];
 }
 
 

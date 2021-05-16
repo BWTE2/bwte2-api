@@ -3,10 +3,9 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization');
 header("Access-Control-Allow-Credentials: true");
 header('Content-type: application/json');
-header('Access-Control-Allow-Methods: GET, OPTIONS');
+header('Access-Control-Allow-Methods: PUT, OPTIONS');
 session_start();
-require_once("../../../bwte2-backend/controllers/help_controllers/LecturerAccessor.php");
-require_once("../../../bwte2-backend/controllers/test_controllers/StudentGetter.php");
+require_once("../../../bwte2-backend/controllers/help_controllers/StudentCreator.php");
 require_once("../../../bwte2-backend/controllers/MainTestController.php");
 const FLAGS = JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
 
@@ -23,33 +22,17 @@ if($_SERVER["REQUEST_METHOD"] === 'OPTIONS'){
 
 
 
+handleAllRequests();
 
-if(isLogged()) {
-    handleAllRequests();
-}
-else{
-//    http_response_code(401);
-    $responseMessage = ["responseCode" => 401, "responseMessaage" => "Neautorizovany prístup"];
-
-    echo json_encode(["responseErrorMessage" => $responseMessage]);
-
-}
 
 /* ////////////////////////////////////////////////////////////////
  * FUNCTIONS
 */////////////////////////////////////////////////////////////////
-function isLogged(){
-    if(isset($_SESSION["studentId"])) {
-        return true;
-    }
-    return false;
-}
-
 
 
 function handleAllRequests(){
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        handleGetRequest();
+    if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+        handlePutRequest();
     }
     else {
         http_response_code(405);
@@ -57,35 +40,51 @@ function handleAllRequests(){
 }
 
 /*
- * GET
+ * PUT
  */
 
-function handleGetRequest(){
+function handlePutRequest(){
     if(isset($_GET["key"])){
-        //ziskat konkretny test
-        handleGetQuestionsRequest();
+        handlePutStateRequest();
     }
     else{
         http_response_code(412);
     }
 }
 
-function handleGetQuestionsRequest(){
+function handlePutStateRequest(){
     $key = $_GET["key"];
-    $json = getQuestionsJson($key);
+    $studentId = $_GET["studentId"];
+    $json = getJson($key, $studentId);
     echo json_encode($json, FLAGS);
 }
 
 
-function getQuestionsJson($key){
-    $testController = new MainTestController();
-    $test = $testController->getQuestions($key);
+function getJson($key, $studentId){
+    $studentCreator = new StudentCreator();
+    $actualStatus = $studentCreator->getActualStatus($key, $studentId);
 
-    $studentGetter = new StudentGetter();
-    $studentId = $_SESSION["studentId"];
-    $studentName = $studentGetter->getName($studentId);
-   // $studentFullName = $studentName['name'] + $studentName['surname'];
+    if($actualStatus === "FINISHED"){
+        http_response_code(200);
+        return ["updated" => "not", "key" => $key, "studentId" => $studentId];
+    }
+
+    $inputJson = getInputJsonData();
+    $wasIn = $inputJson->wasIn;
+
+    if($wasIn) {
+        $response = $studentCreator->updateInTestStatus($key, $studentId);
+    }
+    else{
+        $response = $studentCreator->updateOutTestStatus($key, $studentId);
+    }
 
     http_response_code(200);
-    return ["response" => [ "test" => $test, "studentId" => $studentId, "studentName" => $studentName]];
+    return ["response" => $response];
+}
+
+
+function getInputJsonData(){
+    $json = file_get_contents('php://input');
+    return json_decode($json, false);
 }

@@ -5,18 +5,22 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-s
 
+    RewriteRule ^student-creator student-creator/index.php
+    RewriteRule ^lecturer-logout lecturer-logout/index.php
     RewriteRule ^lecturer-login lecturer-login/index.php
     RewriteRule ^lecturer-registration lecturer-registration/index.php
     RewriteRule ^key-generator key-generator/index.php
 
     RewriteRule ^tests/([^\W]+)$ tests/index.php?key=$1
     RewriteRule ^tests/([^/]+)/questions$ tests/questions/index.php?key=$1
-    RewriteRule ^tests/([^/]+)/timer$ tests/timer/index.php?key=$1
+    RewriteRule ^tests/([^/]+)/timer/([^/]+)$ tests/timer/index.php?key=$1&studentId=$2
     RewriteRule ^tests/([^/]+)/activities$ tests/activities/index.php?key=$1
+    RewriteRule ^tests/([^/]+)/activities-updator/([^/]+)$ tests/activities-updator/index.php?key=$1&studentId=$2
     RewriteRule ^tests/([^/]+)/export$ tests/export/index.php?key=$1
 
     RewriteRule ^tests/([^/]+)/students/$ tests/students/index.php?key=$1
+    RewriteRule ^tests/([^/]+)/students/export$ tests/students/export/index.php?key=$1
     RewriteRule ^tests/([^/]+)/students/([^/]+)$ tests/students/index.php?key=$1&student_id=$2
-    RewriteRule ^tests/([^/]+)/students/([^/]+)/export$ tests/students/export/index.php?key=$1&student_id=$2
+
 </IfModule>
 

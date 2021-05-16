@@ -8,10 +8,13 @@ header('Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS');
 require_once("../../bwte2-backend/controllers/help_controllers/LecturerAccessor.php");
 require_once("../../bwte2-backend/controllers/MainTestController.php");
 const FLAGS = JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
-
+session_start();
 /* ////////////////////////////////////////////////////////////////
  * SCRIPT
 */////////////////////////////////////////////////////////////////
+
+
+
 
 if($_SERVER["REQUEST_METHOD"] === 'OPTIONS'){
     header('Access-Control-Allow-Origin: *');
@@ -26,7 +29,9 @@ if(isLogged()) {
     handleAllRequests();
 }
 else{
-    http_response_code(401);
+    $responseMessage = ["responseCode" => 401, "responseMessaage" => "Neautorizovany prístup"];
+
+    echo json_encode(["responseErrorMessage" => $responseMessage]);
 }
 
 
@@ -41,10 +46,7 @@ function isLogged(){
     if(isset($_SESSION["lecturerId"])) {
         return true;
     }
-
-    //TODO: v priapde potreby skontkretizovat
-
-    return true;
+    return false;
 }
 
 
@@ -118,21 +120,11 @@ function handlePostRequest(){
         return;
     }
     $data = getInputJsonData();
-
-    if(arePostDataCorrect($data)){
-        $json = sendPostData($data);
-        echo json_encode($json, FLAGS);
-    }
-    else{
-        http_response_code(412);
-    }
+    $json = sendPostData($data);
+    echo json_encode($json, FLAGS);
 }
 
 
-function arePostDataCorrect($data){
-    //TODO
-    return true;
-}
 
 function sendPostData($data){
     $key = $_GET["key"];
@@ -156,28 +148,13 @@ function handlePutRequest(){
     }
     $data = getInputJsonData();
 
-    if(wantActivateTest($data)){
+    if($data->wantActivate){
         $json = activateTest();
-        echo json_encode($json, FLAGS);
-    }
-    else if (wantDeActivateTest($data)){
-        $json = deactivateTest();
-        echo json_encode($json, FLAGS);
     }
     else{
-        http_response_code(412);
+        $json = deactivateTest();
     }
-}
-
-
-function wantActivateTest($data){
-    //TODO
-    return true;
-}
-
-function wantDeActivateTest($data){
-    //TODO
-    return true;
+    echo json_encode($json, FLAGS);
 }
 
 
