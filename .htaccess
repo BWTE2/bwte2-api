@@ -21,5 +21,8 @@
     RewriteRule ^tests/([^/]+)/students/$ tests/students/index.php?key=$1
     RewriteRule ^tests/([^/]+)/students/([^/]+)$ tests/students/index.php?key=$1&student_id=$2
     RewriteRule ^tests/([^/]+)/students/([^/]+)/export$ tests/students/export/index.php?key=$1&student_id=$2
+
+    RewriteRule ^qr-generator/([^/]+)/([^/]+)/([^/]+)$ qr-generator/index.php?test=$1&user=$2&question=$3
+    RewriteRule ^qr-generator/([^/]+)/([^/]+)/([^/]+)/([^/]+)$ qr-generator/index.php?test=$1&user=$2&question=$3&token=$4
 </IfModule>
 
