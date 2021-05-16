@@ -59,8 +59,11 @@ function runSending($key)
         $time--;
         $isTestRunning = $testService->isTestRunning($key);
         $studentStatus = $studentCreator->getActualStatus($key, $studentId);
-        if(!$isTestRunning || $studentStatus === "FINISHED"){
+        if(!$isTestRunning){
             $time = 0;
+        }
+        if($studentStatus === "FINISHED"){
+            $time = -1;
         }
 
         ob_flush();
@@ -68,7 +71,7 @@ function runSending($key)
         sleep(1);
     }
 
-    if(!$isTestRunning || $studentStatus === "FINISHED"){
+    if(!$isTestRunning){
         $time = 0;
         echo "event: timer\n";
         echo "data: " .  $time . PHP_EOL . PHP_EOL;
@@ -77,6 +80,16 @@ function runSending($key)
         flush();
         sleep(1);
     }
+    if($studentStatus === "FINISHED"){
+        $time = -1;
+        echo "event: timer\n";
+        echo "data: " .  $time . PHP_EOL . PHP_EOL;
+
+        ob_flush();
+        flush();
+        sleep(1);
+    }
+
 }
 
 function getMaxTime($key){
